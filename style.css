@@ -2,3 +2,56 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+svg.bottom-left {
+    position: absolute;
+    left: 0;
+    bottom: 0
+}
+
+svg.top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+main {
+    position: relative;
+    background-image: url("");
+}
+
+header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header > h1 {
+    color: #293264;
+    font-family: "Karla", sans-serif;
+    margin-bottom: 0;
+}
+
+header > p {
+    margin-top: 7px;
+    margin-bottom: 30px;
+    color: #293264;
+}
+
+header > button {
+    font-family: inherit;
+    font-weight: 500;
+    color: #F5F7FB;
+    background-color: #4D5B9E;
+    width: 193px;
+    height: 52px;
+    border: none;
+    border-radius: 15px;
+}
+
