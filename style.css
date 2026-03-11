@@ -10,18 +10,20 @@ body {
 svg.bottom-left {
     position: absolute;
     left: 0;
-    bottom: 0
+    bottom: 0;
+    z-index: -1;
 }
 
 svg.top-right {
     position: absolute;
     top: 0;
     right: 0;
+    z-index: -1;
 }
 
 main {
     position: relative;
-    background-image: url("");
+    height: 100vh;
 }
 
 header {
@@ -44,7 +46,7 @@ header > p {
     color: #293264;
 }
 
-header > button {
+header > button, form > button {
     font-family: inherit;
     font-weight: 500;
     color: #F5F7FB;
@@ -55,3 +57,48 @@ header > button {
     border-radius: 15px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 75px;
+}
+
+div.question > p {
+    color: #293264;
+    font-weight: 700;
+    font-family: 'Karla', sans-serif;
+    font-size: 1.25rem;
+}
+
+div > input[type="radio"] {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+}
+
+div > label {
+    border: 0.79px solid #4D5B9E;
+    border-radius: 8px;
+    padding: 2px 20px;
+    cursor: pointer;
+}
+
+/* Style the label when its radio is checked */
+div > input[type="radio"]:checked + label {
+    background-color: #D6DBF5;
+    border-color: #D6DBF5;
+}
+
+
+div.options {
+    display: flex;
+    gap: 15px;
+}
+
+form > button {
+    align-self: center;
+}
