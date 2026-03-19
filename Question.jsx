@@ -1,14 +1,16 @@
 import Option from "./Option"
 
-export default function Question() {
+export default function Question(props) {
+
+    const optionEl = props.options.map((option) => {
+        return <Option name={props.id} option={option} />
+    })
+
     return (
         <div className="question">
-            <p>How would one say goodbye in Spanish?</p>
+            <p>{props.question}</p>
             <div className="options">
-                <Option name="q1" option="Adiós" />
-                <Option name="q1" option="Hola" />
-                <Option name="q1" option="Au Revoir" />
-                <Option name="q1" option="Salir" />
+                {optionEl}
             </div>
         </div>
     )

@@ -8,14 +8,14 @@ body {
 }
 
 svg.bottom-left {
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     z-index: -1;
 }
 
 svg.top-right {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     z-index: -1;
@@ -93,6 +93,13 @@ div > input[type="radio"]:checked + label {
     border-color: #D6DBF5;
 }
 
+div > input[type="radio"].correct + label {
+    background-color: #94D7A2;
+}
+
+div > input[type="radio"].wrong + label {
+    background-color: #F8BCBC;
+}
 
 div.options {
     display: flex;
