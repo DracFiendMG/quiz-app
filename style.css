@@ -99,6 +99,12 @@ div > input[type="radio"].correct + label {
 
 div > input[type="radio"].wrong + label {
     background-color: #F8BCBC;
+    opacity: 50%;
+}
+
+div > input[type="radio"].other + label {
+    /* background-color: #4D5B9E; */
+    opacity: 50%;
 }
 
 div.options {

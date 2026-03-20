@@ -2,29 +2,54 @@ import { useEffect, useState } from "react"
 import Question from "./Question"
 
 export default function App() {
-    const [questions, setQuestions] = useState([])
+    const [questions, setQuestions] = useState({})
+    const [submittedAnswers, setSubmittedAnswers] = useState(null)
 
     const showHeader = false
 
     useEffect(() => {
         fetch("https://opentdb.com/api.php?amount=10&type=multiple")
             .then(res => res.json())
-            .then(data => setQuestions(data.results))
+            .then(data => {
+                let questionsWithId = {}
+                data.results.forEach((q, idx) => {
+                    console.log(q)
+                    questionsWithId[`q${idx + 1}`] = q
+                })
+                console.log(questionsWithId)
+                setQuestions(questionsWithId)
+            })
     }, [])
 
-    const questionsEl = questions.map((question, index) => {
-        // Use clsx() to provide the correct className to the options
-        return (
-            <Question key={index} id={`q${index + 1}`} question={question.question} options={[question.correct_answer, ...question.incorrect_answers]} />
+    let questionsEl = []
+    for (const [key, value] of Object.entries(questions)) {
+        questionsEl.push(
+            <Question 
+                key={key} 
+                id={key} 
+                question={value.question} 
+                correctOption={value.correct_answer} 
+                options={value.incorrect_answers} 
+                selectedOption={submittedAnswers?.[key]}
+                isSubmitted={submittedAnswers !== null}
+            />
         )
-    })
-
-    function validateAnswers(formData) {
-        for (const [name, value] of formData.entries()) {
-            console.log(`${name}: ${value}`)
-        }
-        console.log(formData)
     }
+    // questions.entries().map((question, index) => {
+    //     // Use clsx() to provide the correct className to the options
+    //     return (
+    //         <Question key={index} id={`q${index + 1}`} question={question.question} options={[question.correct_answer, ...question.incorrect_answers]} />
+    //     )
+    // })
+    function validateAnswers(formData) {
+        let answers = {}
+        console.log(formData.entries())
+        for (const [name, value] of formData.entries()) {
+            answers[name] = value
+        }
+        setSubmittedAnswers(answers)
+    }
+    
 
     return (
         <main>
