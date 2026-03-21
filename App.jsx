@@ -4,22 +4,27 @@ import Question from "./Question"
 export default function App() {
     const [questions, setQuestions] = useState({})
     const [submittedAnswers, setSubmittedAnswers] = useState(null)
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [showHeader, setShowHeader] = useState(true)
+    const [resetCount, setResetCount] = useState(0)
 
-    const showHeader = false
-
-    useEffect(() => {
-        fetch("https://opentdb.com/api.php?amount=10&type=multiple")
+    function fetchQuestions() {
+        fetch("https://opentdb.com/api.php?amount=10&type=multiple&category=31")
             .then(res => res.json())
             .then(data => {
                 let questionsWithId = {}
                 data.results.forEach((q, idx) => {
-                    console.log(q)
                     questionsWithId[`q${idx + 1}`] = q
                 })
-                console.log(questionsWithId)
                 setQuestions(questionsWithId)
             })
-    }, [])
+    }
+
+    useEffect(() => {
+        if (!showHeader) {
+            fetchQuestions()
+        }
+    }, [showHeader, resetCount])
 
     let questionsEl = []
     for (const [key, value] of Object.entries(questions)) {
@@ -31,23 +36,29 @@ export default function App() {
                 correctOption={value.correct_answer} 
                 options={value.incorrect_answers} 
                 selectedOption={submittedAnswers?.[key]}
-                isSubmitted={submittedAnswers !== null}
+                isSubmitted={isSubmitted}
             />
         )
     }
-    // questions.entries().map((question, index) => {
-    //     // Use clsx() to provide the correct className to the options
-    //     return (
-    //         <Question key={index} id={`q${index + 1}`} question={question.question} options={[question.correct_answer, ...question.incorrect_answers]} />
-    //     )
-    // })
+
+    function startQuiz() {
+        setShowHeader(false)
+    }
+
     function validateAnswers(formData) {
         let answers = {}
-        console.log(formData.entries())
+        
         for (const [name, value] of formData.entries()) {
             answers[name] = value
         }
         setSubmittedAnswers(answers)
+        setIsSubmitted(true)
+    }
+
+    function reset() {
+        setSubmittedAnswers(null)
+        setIsSubmitted(false)
+        setResetCount(prev => prev + 1)
     }
     
 
@@ -63,14 +74,22 @@ export default function App() {
             {showHeader && <header>
                 <h1>Quizzical</h1>
                 <p>Some description if needed</p>
-                <button>Start quiz</button>
+                <button onClick={startQuiz}>Start quiz</button>
             </header>}
-            <section>
-                <form id="quiz-form" action={validateAnswers}>
+            {!showHeader && <section>
+                <form id="quiz-form" action={!isSubmitted ? validateAnswers : reset}>
                     {questionsEl}
-                    <button>Check answers</button>
+                    <div className="buttons">
+                        {isSubmitted 
+                            && <p>You scored {
+                                    Object.values(submittedAnswers).filter((v, i) => v === Object.values(questions)[i].correct_answer).length
+                                    }/{Object.keys(questions).length} correct answers</p>}
+                        {isSubmitted 
+                            ? <button>Play again</button> 
+                            : <button>Check answers</button>}
+                    </div>
                 </form>
-            </section>
+            </section>}
         </main>
     )
 }

@@ -1,12 +1,16 @@
 import Option from "./Option"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { decode } from "html-entities"
 
 export default function Question(props) {
     const correctOption = props.correctOption
     const [shuffledOptions, setShuffledOptions] = useState(shuffle([correctOption, ...props.options]))
 
+    useEffect(() => {
+        setShuffledOptions(shuffle([correctOption, ...props.options]))
+    }, [props.question, correctOption, props.options])
+
     const optionEl = shuffledOptions.map((option) => {
-        // modify this logic to maintain the correct/wrong/other state of the options
         let isCorrect = false
         let isWrong = false
         let isOther = false
@@ -14,9 +18,7 @@ export default function Question(props) {
         if (props.isSubmitted) {
             if (option === correctOption) {
                 isCorrect = true
-            }
-            
-            if (option === props.selectedOption) {
+            } else if (option === props.selectedOption) {
                 isWrong = true
             } else {
                 isOther = true
@@ -46,7 +48,7 @@ export default function Question(props) {
 
     return (
         <div className="question">
-            <p>{props.question}</p>
+            <p>{decode(props.question)}</p>
             <div className="options">
                 {optionEl}
             </div>

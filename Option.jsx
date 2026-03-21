@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import { decode } from "html-entities"
 
 export default function Option(props) {
     const optionClass = clsx({
@@ -9,7 +10,7 @@ export default function Option(props) {
     return (
         <>
             <input className={optionClass} type="radio" name={props.name} id={props.option} value={props.option} />
-            <label htmlFor={props.option}>{props.option}</label>
+            <label htmlFor={props.option}>{decode(props.option)}</label>
         </>
     )
 }

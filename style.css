@@ -46,7 +46,7 @@ header > p {
     color: #293264;
 }
 
-header > button, form > button {
+header > button, form > div > button {
     font-family: inherit;
     font-weight: 500;
     color: #F5F7FB;
@@ -112,6 +112,17 @@ div.options {
     gap: 15px;
 }
 
-form > button {
+form > div.buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+form > div.buttons > p {
+    font-size: 17px;
+    font-weight: 700;
+    color: #293264;
+}
+
+form > div > button {
     align-self: center;
 }
