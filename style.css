@@ -34,6 +34,10 @@ header {
     align-items: center;
 }
 
+header, section {
+    max-width: 800px;
+}
+
 header > h1 {
     color: #293264;
     font-family: "Karla", sans-serif;
@@ -55,6 +59,10 @@ header > button, form > div > button {
     height: 52px;
     border: none;
     border-radius: 15px;
+}
+
+section {
+    margin: auto;
 }
 
 form {
