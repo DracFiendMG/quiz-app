@@ -73,7 +73,7 @@ export default function App() {
 
             {showHeader && <header>
                 <h1>Quizzical</h1>
-                <p>Some description if needed</p>
+                <p>Test your knowledge of anime and manga.</p>
                 <button onClick={startQuiz}>Start quiz</button>
             </header>}
             {!showHeader && <section>
